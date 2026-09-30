@@ -1,10 +1,10 @@
 class Tritondft < Formula
   desc "AI-powered local-to-cluster DFT workflow agent"
   homepage "https://github.com/ktalit/TritonDFT"
-  url "https://github.com/ktalit/TritonDFT.git",
-      revision: "8df149e351f0c108d3e310399d7c9338171b9b5d"
+  url "https://github.com/ktalit/TritonDFT/archive/8df149e351f0c108d3e310399d7c9338171b9b5d.tar.gz"
   version "0.1.0"
-  revision 6
+  sha256 "d60a8efb8114583dc303485ef94617b3fd24d7ac9bb53afa4c497adf3681436c"
+  revision 7
 
   depends_on "python-tk@3.12"
   depends_on "python@3.12"
