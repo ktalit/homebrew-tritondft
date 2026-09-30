@@ -4,17 +4,14 @@ class Tritondft < Formula
   desc "AI-powered local-to-cluster DFT workflow agent"
   homepage "https://github.com/ktalit/TritonDFT"
   url "https://github.com/ktalit/TritonDFT.git",
-      revision: "79fc4c0d93e090dce62cab99ad502d669c739dd7"
+      revision: "6dc0ec6112137233dc8ec61deb7f4f6b2fd2477f"
   version "0.1.0"
-  revision 3
+  revision 4
 
   depends_on "python@3.12"
 
   def install
-    venv = virtualenv_create(libexec, "python3.12")
-    python = Formula["python@3.12"].opt_bin/"python3.12"
-    system python, "-m", "pip", "--python=#{venv.root}/bin/python", "install", buildpath
-    bin.install_symlink libexec/"bin/tritondft"
+    virtualenv_install_with_resources
   end
 
   def caveats
