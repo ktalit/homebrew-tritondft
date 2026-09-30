@@ -2,10 +2,11 @@ class Tritondft < Formula
   desc "AI-powered local-to-cluster DFT workflow agent"
   homepage "https://github.com/ktalit/TritonDFT"
   url "https://github.com/ktalit/TritonDFT.git",
-      revision: "6dc0ec6112137233dc8ec61deb7f4f6b2fd2477f"
+      revision: "8df149e351f0c108d3e310399d7c9338171b9b5d"
   version "0.1.0"
-  revision 5
+  revision 6
 
+  depends_on "python-tk@3.12"
   depends_on "python@3.12"
   depends_on "uv"
 
@@ -52,5 +53,11 @@ class Tritondft < Formula
 
   test do
     assert_match "TritonDFT 0.1.0", shell_output("#{bin}/tritondft --version")
+    system libexec/"bin/python", "-c", "import tkinter"
+    system libexec/"bin/python", "-c", <<~PYTHON
+      from tritondft_data.pseudopotentials import packaged_pseudo_dir
+      path = packaged_pseudo_dir("LDA")
+      assert (path / "si.upf").is_file(), path
+    PYTHON
   end
 end
