@@ -8,6 +8,7 @@ class Tritondft < Formula
   version "0.1.0"
   revision 4
 
+  depends_on "rust" => :build
   depends_on "libyaml"
   depends_on "python@3.12"
 
@@ -83,8 +84,8 @@ class Tritondft < Formula
   end
 
   resource "cloudpickle" do
-    url "https://files.pythonhosted.org/packages/27/fb/576f067976d320f5f0114a8d9fa1215425441bb35627b1993e5afd8111e5/cloudpickle-3.1.2.tar.gz"
-    sha256 "7fda9eb655c9c230dab534f1983763de5835249750e85fbcef43aaa30a9a2414"
+    url "https://files.pythonhosted.org/packages/88/39/799be3f2f0f38cc727ee3b4f1445fe6d5e4133064ec2e4115069418a5bb6/cloudpickle-3.1.2-py3-none-any.whl"
+    sha256 "9acb47f6afd73f60dc1df93bb801b472f05ff42fa6c84167d25cb206be1fbf4a"
   end
 
   resource "contourpy" do
@@ -223,8 +224,8 @@ class Tritondft < Formula
   end
 
   resource "matplotlib" do
-    url "https://files.pythonhosted.org/packages/e7/c8/9aa712a0afb882649424dd8de8ad9aa6235e796e84c6052e8f6dc1598d0d/matplotlib-3.11.2.tar.gz"
-    sha256 "cec596316640f2b394b8f0daa0ea61a8eae82d017b620b9f202befb972a59ea4"
+    url "https://files.pythonhosted.org/packages/a6/c4/7f5f3601ee69baf072c0c7d3ce60c03e0618621c5a56c34a62a460e29d11/matplotlib-3.11.2-cp312-cp312-macosx_11_0_arm64.whl"
+    sha256 "ef31985c4dedb5f1424e1aec6849a47dd37689cb7fa3c20b1b82187f26806261"
   end
 
   resource "monty" do
@@ -488,7 +489,10 @@ class Tritondft < Formula
   end
 
   def install
-    virtualenv_install_with_resources
+    venv = virtualenv_create(libexec, "python3.12")
+    venv.pip_install resources.reject { |resource| resource.name == "matplotlib" }
+    venv.pip_install resource("matplotlib").cached_download
+    venv.pip_install_and_link buildpath
   end
 
   def caveats
