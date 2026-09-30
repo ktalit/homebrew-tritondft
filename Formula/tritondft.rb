@@ -6,7 +6,7 @@ class Tritondft < Formula
   url "https://github.com/ktalit/TritonDFT.git",
       revision: "79fc4c0d93e090dce62cab99ad502d669c739dd7"
   version "0.1.0"
-  revision 2
+  revision 3
 
   depends_on "python@3.12"
 
@@ -27,6 +27,14 @@ class Tritondft < Formula
       Then edit ~/.tritondft/config.yaml and verify it with:
         tritondft doctor
     EOS
+  end
+
+  on_macos do
+    def post_install
+      Keg.new(prefix).mach_o_files.each do |binary|
+        system "/usr/bin/codesign", "--force", "--sign", "-", binary
+      end
+    end
   end
 
   test do
