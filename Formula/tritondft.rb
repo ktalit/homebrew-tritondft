@@ -6,12 +6,13 @@ class Tritondft < Formula
   url "https://github.com/ktalit/TritonDFT.git",
       revision: "79fc4c0d93e090dce62cab99ad502d669c739dd7"
   version "0.1.0"
+  revision 1
 
   depends_on "python@3.12"
 
   def install
-    venv = virtualenv_create(libexec, "python3.12")
-    venv.pip_install buildpath
+    venv = virtualenv_create(libexec, "python3.12", without_pip: false)
+    system venv.root/"bin/python", "-m", "pip", "install", buildpath
     bin.install_symlink libexec/"bin/tritondft"
   end
 
